@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "journal"
+version = "0.1.0"
+description = ""
+authors = ["Nabil Khalil <nabilamirkhalil@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "journal", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
