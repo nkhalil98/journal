@@ -40,7 +40,7 @@ hooks:
     build: |
         set -eu
         python3.10 -m pip install --upgrade pip
-      gpoetry lock && poetry install
+        poetry lock && poetry install
         
         mkdir logs
         poetry run python manage.py collectstatic
