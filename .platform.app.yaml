@@ -40,10 +40,10 @@ hooks:
     build: |
         set -eu
         python3.10 -m pip install --upgrade pip
-        poetry install
+      gpoetry lock && poetry install
         
         mkdir logs
-        python manage.py collectstatic
+        poetry run python manage.py collectstatic
         rm -rf logs
     deploy: |
-        python manage.py migrate
+        poetry run python manage.py migrate
