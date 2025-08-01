@@ -2,7 +2,7 @@ name: "journal"
 type: "python:3.10"
 dependencies:
   python3:
-    poetry: '*'
+    poetry: "*"
 
 variables:
   env:
@@ -10,40 +10,40 @@ variables:
     POETRY_VIRTUALENVS_CREATE: true
 
 relationships:
-    database: "db:postgresql"
+  database: "db:postgresql"
 
 # The configuration of the app when it's exposed to the web
 web:
-    upstream:
-        socket_family: unix
-    commands:
-        start: "poetry run gunicorn -w 4 -b unix:$SOCKET journal.wsgi:application"
-    locations:
-        "/":
-            passthru: true
-        "/static":
-            root: "static"
-            expires: 1h
-            allow: true
+  upstream:
+    socket_family: unix
+  commands:
+    start: "poetry run gunicorn -w 4 -b unix:$SOCKET journal.wsgi:application"
+  locations:
+    "/":
+      passthru: true
+    "/static":
+      root: "static"
+      expires: 1h
+      allow: true
 
 # The size of the persistent disk of the application (in MB)
 disk: 512
 
 # Set a local read/write mount for logs
 mounts:
-    "logs":
-        source: local
-        source_path: logs
+  "logs":
+    source: local
+    source_path: logs
 
 # The hooks executed at various points in the lifecycle of the application
 hooks:
-    build: |
-        set -eu
-        python3.10 -m pip install --upgrade pip
-        poetry lock && poetry install
-        
-        mkdir logs
-        poetry run python manage.py collectstatic
-        rm -rf logs
-    deploy: |
-        poetry run python manage.py migrate
+  build: |
+    set -eu
+    python3.10 -m pip install --upgrade pip
+    poetry lock && poetry install
+
+    mkdir logs
+    poetry run python manage.py collectstatic
+    rm -rf logs
+  deploy: |
+    poetry run python manage.py migrate
